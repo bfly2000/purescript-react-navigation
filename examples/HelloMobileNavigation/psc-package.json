@@ -1,0 +1,17 @@
+{
+    "name": "HelloMobileNavigation",
+    "set": "psc-0.11.3",
+    "source": "https://github.com/purescript/package-sets.git",
+    "depends": [
+        "generics",
+        "psci-support",
+        "eff",
+        "maps",
+        "nullable",
+        "integers",
+        "newtype",
+        "maybe",
+        "react",
+        "prelude"
+    ]
+}
