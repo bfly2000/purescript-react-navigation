@@ -15,18 +15,10 @@ module.exports = {
     devtool: isProd
         ? 'hidden-source-map'
         : 'cheap-source-map',
-    entry: [
-        // activate HMR for React 'react-hot-loader/patch', bundle the client for
-        // webpack-dev-server and connect to the provided endpoint
-        'webpack-dev-server/client?http://localhost:8080',
-        // bundle the client for hot reloading only- means to only hot reload for
-        // successful updates
-        'webpack/hot/only-dev-server',
-        path.join(__dirname, 'index.web.js')
-    ],
+    entry: path.join(__dirname, 'index.web.js'),
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js' ,
+        filename: 'bundle.js',
         publicPath: '/',
         pathinfo: !isProd
     },
@@ -34,37 +26,47 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /node_modules|bower_components/,
-                use: {
-                    loader: 'babel-loader'
+                exclude: /node_modules/,
+                loaders: ['babel-loader?cacheDirectory=true']
+            }, {
+                // Most react-native libraries include uncompiled ES6 JS.
+                test: /\.js$/,
+                include: [
+                    /node_modules\/react-native-/, /node_modules\/react-navigation/
+                ],
+                loader: 'babel-loader',
+                query: {
+                    cacheDirectory: true
                 }
             }, {
-                test: /.purs$/,
+                test: /\.purs$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'purs-loader',
                     options: {
-                       src: [
+                        src: [
                             'bower_components/purescript-*/src/**/*.purs', 'src/**/*.purs'
                         ],
-                        bundle: isProd,
-                        bundleOutput: 'dist/bundle.js',
+                        // bundle: isProd, bundleOutput: 'distbundle.js',
                         psc: 'psa',
-                        package: isProd,
-                        watch: !isProd
+                        package: isProd
                     }
+                }
+            }, {
+                test: /\.(gif|jpe?g|png|svg)$/,
+                loader: 'url-loader',
+                query: {
+                    name: '[name].[hash:16].[ext]'
                 }
             }
         ]
     },
     plugins: plugins,
-    resolveLoader: {
-        modules: [path.join(__dirname, 'node_modules')]
-    },
-    resolve: {
+        resolve: {
         alias: {
-            "react-native": "react-native-web"
-        },
+            "react-native": "react-native-web/src",
+            "react-navigation": "react-navigation/src/react-navigation.js"
+        }
     },
     performance: {
         hints: false
