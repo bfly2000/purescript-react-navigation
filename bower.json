@@ -21,9 +21,9 @@
     "url": "git://github.com/sectore/purescript-react-navigation.git"
   },
   "dependencies": {
-    "purescript-reactnative": "^2.42.0"
+    "purescript-reactnative": "bfly2000/purescript-reactnative#react-native-web"
   },
   "devDependencies": {
-    "purescript-psci-support": "^2.0.0"
+    "purescript-psci-support": "^3.0.0"
   }
 }

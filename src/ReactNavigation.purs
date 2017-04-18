@@ -1,7 +1,7 @@
 module ReactNavigation where
 
 import Prelude
-import Control.Monad.Eff (Eff)
+import Control.Monad.Eff (Eff, kind Effect)
 import Data.Function.Uncurried (Fn0, Fn2, Fn3, runFn2, runFn3)
 import Data.Maybe (Maybe(..))
 import Data.Nullable (Nullable, toNullable)
@@ -13,7 +13,7 @@ import ReactNative.Unsafe.ApplyProps (unsafeApplyProps)
 
 -- | StackNavigator https://reactnavigation.org/docs/navigators/stack#API-Definition
 
-foreign import data NAVIGATION :: !
+foreign import data NAVIGATION :: Effect
 
 type NavigationEff eff = Eff (nav :: NAVIGATION | eff)
 
